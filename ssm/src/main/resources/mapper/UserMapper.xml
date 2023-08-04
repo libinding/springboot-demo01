@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ding.ssm.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.ding.ssm.domain.User">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+            <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+            <result property="passwd" column="passwd" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,login_name,nick_name,
+        passwd
+    </sql>
+    <insert id="addUser">
+        insert into t_user(id,login_name,nick_name,passwd)
+        values (#{id},#{loginName}, #{nickName}, #{passwd})
+    </insert>
+    <update id="updateId">
+        update t_user
+        set login_name = #{loginName},nick_name = #{nickName},passwd = #{passwd}
+        where id = #{id}
+    </update>
+    <select id="getByIdUser" resultType="com.ding.ssm.domain.User">
+        select * from t_user where id =#{id}
+    </select>
+    <select id="getAllUser" resultType="com.ding.ssm.domain.User">
+        select * from t_user
+    </select>
+    <select id="selectNickNameAndLoginNameById" resultMap="BaseResultMap">
+        select nick_name, login_name
+        from t_user
+        where id = #{id,jdbcType=NUMERIC}
+    </select>
+    <select id="selectIdAndLoginNameOrderByIdDesc" resultMap="BaseResultMap">
+        select id, login_name
+        from t_user
+        order by id desc
+    </select>
+</mapper>
